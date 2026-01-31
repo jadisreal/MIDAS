@@ -1,0 +1,16 @@
+{
+  "temperature": 0.7,
+  "topP": 0.85,
+  "topK": 29,
+  "maxTokens": 170,
+  "repeatPenalty": 1.1,
+  "contextWindow": 3584,
+  "beamSize": 1,
+  "vadFilter": true,
+  "vadThreshold": 300,
+  "sampleRate": 48000,
+  "voice": "en_0",
+  "soundEffects": true,
+  "inputDevice": "9c091e4c4faf05da7012946a179c63aba67c6152c93b501906c6a4e7b4522b7a",
+  "outputDevice": "default"
+}

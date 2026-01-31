@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIDAS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background layers -->
+    <div class="bg-gradient"></div>
+    <div class="grain"></div>
+    <canvas id="starsCanvas" class="stars-canvas"></canvas>
+    
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <span class="logo">MIDAS</span>
+            <span class="logo-sub">Neural Interface</span>
+        </div>
+        <div class="nav-center">
+            <div id="status-indicator" class="status-indicator">
+                <span class="status-dot"></span>
+                <span id="status-text" class="status-text">Ready</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button id="historyBtn" class="nav-btn" title="Chat History">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+            </button>
+            <button id="knowledgeBtn" class="nav-btn" title="Knowledge Base">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    <line x1="8" y1="6" x2="16" y2="6"/>
+                    <line x1="8" y1="10" x2="14" y2="10"/>
+                </svg>
+            </button>
+            <button id="settingsBtn" class="nav-btn" title="Settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                </svg>
+            </button>
+            <button id="muteBtn" class="nav-btn" title="Mute">
+                <svg id="volumeOnIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                    <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+                </svg>
+                <svg id="volumeOffIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                    <line x1="23" y1="9" x2="17" y2="15"/>
+                    <line x1="17" y1="9" x2="23" y2="15"/>
+                </svg>
+            </button>
+            <button id="resetBtn" class="nav-btn" title="Reset">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Chat History Sidebar -->
+    <aside id="chatSidebar" class="chat-sidebar">
+        <div class="sidebar-header">
+            <h3>Conversation</h3>
+            <button id="closeSidebar" class="close-sidebar-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div id="chatHistory" class="chat-history">
+            <div class="empty-history" id="emptyHistory">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+                <p>No messages yet</p>
+                <span>Hold the orb to speak</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Orb Visualization -->
+        <div class="orb-stage">
+            <div class="orb-container" id="orbContainer">
+                <!-- All visualization layers -->
+                <canvas id="orbBgCanvas" class="orb-layer"></canvas>
+                <canvas id="orbRingsCanvas" class="orb-layer"></canvas>
+                <canvas id="orbCanvas" class="orb-layer"></canvas>
+                <canvas id="orbParticles" class="orb-layer"></canvas>
+                <!-- Glow effects -->
+                <div class="orb-glow"></div>
+                <div class="orb-glow-pulse"></div>
+                <div class="orb-ring-outer"></div>
+            </div>
+            
+            <!-- Frequency Display -->
+            <div class="freq-display">
+                <canvas id="freqCanvas" class="freq-canvas"></canvas>
+                <div class="freq-info">
+                    <span class="freq-label" id="freqLabel">IDLE</span>
+                    <span class="freq-hz" id="freqHz">—</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Current Transcript -->
+        <div id="transcript" class="transcript">
+            <div class="transcript-user" id="transcriptUser"></div>
+            <div class="transcript-assistant" id="transcriptAssistant"></div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls-bar">
+            <div class="voice-selector">
+                <label>Voice</label>
+                <select id="voiceSelect">
+                    <optgroup label="Female">
+                        <option value="en_0">Aria</option>
+                        <option value="en_1">Nova</option>
+                    </optgroup>
+                    <optgroup label="Male">
+                        <option value="en_2">Atlas</option>
+                        <option value="en_3">Orion</option>
+                        <option value="en_21">Echo</option>
+                        <option value="en_24">Flux</option>
+                        <option value="en_28">Nero</option>
+                        <option value="en_30">Zephyr</option>
+                    </optgroup>
+                </select>
+            </div>
+            
+            <button id="talkBtn" class="talk-btn">
+                <div class="talk-btn-inner">
+                    <svg class="mic-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+                        <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                </div>
+                <span class="talk-label">Hold to speak</span>
+            </button>
+            
+            <div class="hint"><kbd>Space</kbd></div>
+        </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="closeSettings" class="close-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="inputSelect">Microphone</label>
+                    <select id="inputSelect"><option value="" disabled>Loading...</option></select>
+                </div>
+                <div class="setting-group">
+                    <label for="outputSelect">Speaker</label>
+                    <select id="outputSelect"><option value="" disabled>Loading...</option></select>
+                </div>
+                <div class="setting-group">
+                    <label class="toggle-label">
+                        <span>Sound effects</span>
+                        <input type="checkbox" id="soundEffects" checked>
+                        <span class="toggle"></span>
+                    </label>
+                </div>
+                <button id="openAdvanced" class="text-btn">Advanced settings →</button>
+            </div>
+            <div class="modal-footer">
+                <button id="settingsCancel" class="btn-secondary">Cancel</button>
+                <button id="settingsApply" class="btn-primary">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Settings Modal -->
+    <div id="advancedModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Advanced</h2>
+                <button id="closeAdvanced" class="close-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- LLM Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        <h3>Language Model</h3>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Context Window</span>
+                            <span class="value" id="contextWindowValue">4096</span>
+                        </div>
+                        <input type="range" id="contextWindow" min="512" max="8192" step="512" value="4096">
+                        <span class="hint-text">Memory tokens</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Temperature</span>
+                            <span class="value" id="tempValue">0.7</span>
+                        </div>
+                        <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7">
+                        <span class="hint-text">Creativity level</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Top P</span>
+                            <span class="value" id="topPValue">0.9</span>
+                        </div>
+                        <input type="range" id="topP" min="0" max="1" step="0.05" value="0.9">
+                        <span class="hint-text">Nucleus sampling</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Top K</span>
+                            <span class="value" id="topKValue">40</span>
+                        </div>
+                        <input type="range" id="topK" min="1" max="100" step="1" value="40">
+                        <span class="hint-text">Token diversity</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Max Tokens</span>
+                            <span class="value" id="maxTokensValue">150</span>
+                        </div>
+                        <input type="range" id="maxTokens" min="50" max="500" step="10" value="150">
+                        <span class="hint-text">Response length</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Repeat Penalty</span>
+                            <span class="value" id="repeatPenaltyValue">1.1</span>
+                        </div>
+                        <input type="range" id="repeatPenalty" min="1" max="2" step="0.05" value="1.1">
+                        <span class="hint-text">Reduce repetition</span>
+                    </div>
+                </div>
+
+                <!-- STT Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+                            <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+                        </svg>
+                        <h3>Speech Recognition</h3>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Beam Size</span>
+                            <span class="value" id="beamSizeValue">1</span>
+                        </div>
+                        <input type="range" id="beamSize" min="1" max="5" step="1" value="1">
+                        <span class="hint-text">Accuracy vs speed</span>
+                    </div>
+                    <div class="setting-row">
+                        <label class="toggle-label">
+                            <span>VAD Filter</span>
+                            <input type="checkbox" id="vadFilter" checked>
+                            <span class="toggle"></span>
+                        </label>
+                        <span class="hint-text">Skip silence</span>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span>Silence Threshold</span>
+                            <span class="value" id="vadThresholdValue">300</span><span class="unit">ms</span>
+                        </div>
+                        <input type="range" id="vadThreshold" min="100" max="1000" step="50" value="300">
+                    </div>
+                </div>
+
+                <!-- TTS Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                            <path d="M15.54 8.46a5 5 0 010 7.07"/>
+                        </svg>
+                        <h3>Voice Output</h3>
+                    </div>
+                    <div class="setting-row">
+                        <label for="sampleRate">Sample Rate</label>
+                        <select id="sampleRate">
+                            <option value="8000">8 kHz</option>
+                            <option value="24000" selected>24 kHz</option>
+                            <option value="48000">48 kHz</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="advancedDefaults" class="btn-ghost">Reset defaults</button>
+                <div class="footer-actions">
+                    <button id="advancedCancel" class="btn-secondary">Cancel</button>
+                    <button id="advancedApply" class="btn-primary">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knowledge Base Modal -->
+    <div id="knowledgeModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Knowledge Base</h2>
+                <button id="closeKnowledge" class="close-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body knowledge-body">
+                <p class="knowledge-desc">Add documents to give MIDAS context. Files are stored in the <code>knowledge/</code> folder.</p>
+                
+                <!-- File List -->
+                <div class="knowledge-files">
+                    <div class="files-header">
+                        <span class="files-count" id="filesCount">0 documents</span>
+                        <button id="newFileBtn" class="btn-small btn-primary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            New
+                        </button>
+                    </div>
+                    <div class="files-list" id="filesList">
+                        <div class="empty-files" id="emptyFiles">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                            </svg>
+                            <p>No documents yet</p>
+                            <span>Create files to teach MIDAS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Editor -->
+                <div class="knowledge-editor" id="knowledgeEditor" style="display: none;">
+                    <div class="editor-header">
+                        <input type="text" id="editorFilename" placeholder="filename.md" class="filename-input">
+                        <div class="editor-actions">
+                            <button id="editorDelete" class="btn-ghost btn-danger" title="Delete">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="editorContent" class="editor-textarea" placeholder="# Topic Name
+
+Write your knowledge here. MIDAS will use this as context when you ask related questions.
+
+## Tips
+- Use headers to organize topics
+- Be specific and factual
+- Include examples if helpful"></textarea>
+                    <div class="editor-footer">
+                        <span class="editor-hint">Markdown supported • Auto-saves on close</span>
+                        <div class="editor-btns">
+                            <button id="editorCancel" class="btn-secondary">Cancel</button>
+                            <button id="editorSave" class="btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
