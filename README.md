@@ -1,6 +1,10 @@
-# 🎙️ MIDAS
+# MIDAS
+(MVP State)
 
-> **M**y **I**ntelligent **D**igital **A**ssistant **S**ystem — A fully offline, privacy-first voice assistant
+> **M**y **I**ntelligent **D**igital **A**ssistant **S**ystem — A fully offline, privacy-first AI voice assistant
+
+<!-- TODO: Add a screenshot or demo GIF here -->
+<!-- ![MIDAS Demo](docs/demo.gif) -->
 
 [![License](https://img.shields.io/badge/license-MIT-gold.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
@@ -8,37 +12,39 @@
 
 ---
 
-## ✨ What is MIDAS?
+## What is MIDAS?
 
-MIDAS is a **100% offline voice assistant** that runs entirely on your local machine. No cloud APIs, no data collection, no subscriptions — just you and your AI.
+MIDAS is a **100% offline voice assistant** that runs entirely on your computer. No cloud APIs, no data collection, open source, no subscriptions — just you and your AI.
 
 ### Key Features
 
-- 🔒 **Completely Offline** — All processing happens locally
-- 🎤 **Voice Input** — Whisper-powered speech recognition
-- 🔊 **Voice Output** — Natural text-to-speech with Silero
-- 🧠 **Conversational AI** — Powered by Hermes 3 LLM (3B parameters)
-- 💾 **Memory** — Remembers conversation context
-- 📚 **RAG Support** — Add your own knowledge documents
-- ⚡ **GPU Accelerated** — Fast inference with CUDA
+- 🔒 **Completely Offline** — Private, Uncensored: All processing happens locally
+- 🎤 **Voice Input** — OAIWhisper-powered speech transcription(STT)
+- 🔊 **Voice Output** — Natural text-to-speech with SileroTTS
+- 🧠 **Conversational AI** — Powered by Hermes 3 3B (Q4 K_M) LLM
+- 💾 **Memory** — Remembers conversation context (with context window slider)
+- 📚 **RAG Support** — Add/Upload/Write your own knowledge documents
+- ⚡ **Completely GPU Accelerated** — Fast inference with CUDA
 
 ---
 
-## 🖥️ Requirements
+## 🖥️ Spec Requirements
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
 | **OS** | Windows 10, Linux | Windows 11, Ubuntu 22.04 |
 | **GPU** | NVIDIA 4GB VRAM | NVIDIA 6GB+ VRAM |
 | **RAM** | 8 GB | 16 GB |
-| **Python** | 3.10 | 3.11 |
+| **Python(backend)** | 3.10 | 3.11 |
 | **CUDA** | 11.8 | 12.1+ |
 
-> ⚠️ **AMD/Intel GPUs**: Currently not supported. CPU-only mode is possible but slow.
+Total Size: >14GB
+
+> ⚠️ **AMD/Intel GPUs**: Untested/ not supported. CPU-only mode is possible but *very* slow.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 How to install...
 
 ### 1. Clone the Repository
 
@@ -91,7 +97,7 @@ CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python --force-reinstall --no-
 pip install -r requirements.txt
 ```
 
-### 6. Download AI Models
+### 6. Download AI Models (automatic)
 
 ```bash
 python download_models.py
@@ -222,6 +228,7 @@ Contributions welcome! Please:
 
 ## 📄 License
 
+
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
@@ -237,6 +244,9 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <b>Built with 🔥 for offline AI</b>
+  <b>Built with 🔥 for offline AI</b><br>
+  <!-- TODO: Add your name/handle -->
+  Made by Chart
 </p>
 
+_
