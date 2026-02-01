@@ -3,6 +3,18 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# ==========================================
+# MIDAS - Large Model Files (download via download_models.py)
+# ==========================================
+models/*.gguf
+model.pt
+*.gguf
+
+# MIDAS - User Data
+data/*.json
+temp/
+*.wav
+
 # C extensions
 *.so
 
