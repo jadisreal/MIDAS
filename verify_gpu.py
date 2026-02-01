@@ -1,5 +1,5 @@
 """
-Operation Midas - GPU Environment Verification Script
+MIDAS GPU Environment Verification
 Validates that llama-cpp-python and PyTorch are properly configured for CUDA.
 """
 
@@ -122,16 +122,24 @@ def check_numpy_version():
         return False
 
 def check_tts():
-    """Verify Coqui TTS is importable."""
+    """Verify Silero TTS model is available."""
     print("\n" + "=" * 60)
-    print("COQUI TTS CHECK")
+    print("SILERO TTS CHECK")
     print("=" * 60)
     try:
-        from TTS.api import TTS
-        print("✅ Coqui TTS imported successfully!")
-        return True
+        import torch
+        from pathlib import Path
+        model_path = Path(__file__).parent / "model.pt"
+        if model_path.exists():
+            print(f"Model file: {model_path}")
+            print("✅ Silero TTS model found!")
+            return True
+        else:
+            print(f"❌ Silero TTS model not found at {model_path}")
+            print("   Run: python download_models.py")
+            return False
     except Exception as e:
-        print(f"❌ Error importing TTS: {e}")
+        print(f"❌ Error checking Silero TTS: {e}")
         return False
 
 def check_faster_whisper():
@@ -149,14 +157,14 @@ def check_faster_whisper():
 
 def main():
     print("\n" + "#" * 60)
-    print("  OPERATION MIDAS - GPU ENVIRONMENT VERIFICATION")
+    print("  MIDAS - GPU ENVIRONMENT VERIFICATION")
     print("#" * 60 + "\n")
     
     results = {
         "PyTorch CUDA": check_torch_cuda(),
         "llama-cpp-python GPU": check_llama_cpp_cuda(),
         "NumPy Version": check_numpy_version(),
-        "Coqui TTS": check_tts(),
+        "Silero TTS": check_tts(),
         "Faster Whisper": check_faster_whisper(),
     }
     
@@ -173,7 +181,7 @@ def main():
     
     print("\n" + "=" * 60)
     if all_passed:
-        print("🎉 ALL CHECKS PASSED! Environment is ready for Operation Midas!")
+        print("🎉 ALL CHECKS PASSED! Environment is ready.")
     else:
         print("⚠️ Some checks failed. Review the output above for details.")
     print("=" * 60 + "\n")

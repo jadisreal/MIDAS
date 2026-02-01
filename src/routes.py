@@ -32,6 +32,10 @@ def styles():
 def app_js():
     return FileResponse(STATIC_DIR / "app.js", media_type="application/javascript")
 
+@router.get("/favicon.svg")
+def favicon():
+    return FileResponse(STATIC_DIR / "favicon.svg", media_type="image/svg+xml")
+
 # =============================================================================
 # API ENDPOINTS
 # =============================================================================

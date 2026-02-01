@@ -2,9 +2,6 @@
 
 > **M**y **I**ntelligent **D**igital **A**ssistant **S**ystem — A fully offline, privacy-first voice assistant
 
-<!-- TODO: Add a screenshot or demo GIF here -->
-<!-- ![MIDAS Demo](docs/demo.gif) -->
-
 [![License](https://img.shields.io/badge/license-MIT-gold.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 [![CUDA](https://img.shields.io/badge/CUDA-11.8%2B-green.svg)](https://developer.nvidia.com/cuda-toolkit)
@@ -203,7 +200,6 @@ MIDAS features a **Brutalist Gold & Space** aesthetic — minimalist design with
 
 ## 🛣️ Roadmap
 
-<!-- TODO: Update with your planned features -->
 - [ ] Multiple voice options
 - [ ] Conversation export/import
 - [ ] Plugin system
@@ -226,7 +222,6 @@ Contributions welcome! Please:
 
 ## 📄 License
 
-<!-- TODO: Choose your license -->
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
@@ -242,8 +237,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <b>Built with 🔥 for offline AI</b><br>
-  <!-- TODO: Add your name/handle -->
-  Made by [Your Name]
+  <b>Built with 🔥 for offline AI</b>
 </p>
 

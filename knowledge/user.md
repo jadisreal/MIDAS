@@ -2,7 +2,7 @@
 
 ## Owner Information
 Add your personal information here for Midas to remember:
-- Name: Chart
+- Name: 
 
 ## Custom Knowledge
-- IT Expert
+- 

@@ -177,9 +177,7 @@ history = HistoryManager()
 # =============================================================================
 # MODEL PATHS
 # =============================================================================
-# Ministral 3B uses 'mistral3' architecture - NOT YET SUPPORTED by llama-cpp-python
-# LLM_MODEL_PATH = str(MODELS_DIR / "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf")
-LLM_MODEL_PATH = str(MODELS_DIR / "Hermes-3-Llama-3.2-3B.Q4_K_M.gguf")  # Hermes 3B (working)
+LLM_MODEL_PATH = str(MODELS_DIR / "Hermes-3-Llama-3.2-3B.Q4_K_M.gguf")
 
 TTS_MODEL_PATH = str(BASE_DIR / "model.pt")
 WARMUP_AUDIO_PATH = str(BASE_DIR / "test.wav")
